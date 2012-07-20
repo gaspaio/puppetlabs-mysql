@@ -12,10 +12,16 @@
 #
 class mysql::params {
 
+  # generic server params
   $bind_address        = '127.0.0.1'
   $port                = 3306
   $etc_root_password   = false
   $ssl                 = false
+
+  # Default log settings
+  $log_general = 0
+  $log_slow = 0
+  $long_query_time = 1
 
   case $::operatingsystem {
     "Ubuntu": {
@@ -36,6 +42,7 @@ class mysql::params {
       $socket                = '/var/lib/mysql/mysql.sock'
       $config_file           = '/etc/my.cnf'
       $log_error             = '/var/log/mysqld.log'
+      # This is broken. General and slow log file definitions missing
       $ruby_package_name     = 'ruby-mysql'
       $ruby_package_provider = 'gem'
       $python_package_name   = 'MySQL-python'
@@ -55,6 +62,8 @@ class mysql::params {
       $socket               = '/var/run/mysqld/mysqld.sock'
       $config_file          = '/etc/mysql/my.cnf'
       $log_error            = '/var/log/mysql/error.log'
+      $log_general_file     = '/var/log/mysql/mysql.log'
+      $log_error            = '/var/log/mysql/error.log'
       $ruby_package_name    = 'libmysql-ruby'
       $python_package_name  = 'python-mysqldb'
       $php_package_name     = 'php5-mysql'
@@ -73,6 +82,7 @@ class mysql::params {
       $server_package_name   = 'databases/mysql55-server'
       $socket                = '/tmp/mysql.sock'
       $config_file           = '/var/db/mysql/my.cnf'
+            # This is broken. General and slow log file definitions missing
       $log_error             = "/var/db/mysql/${::hostname}.err"
       $ruby_package_name     = 'ruby-mysql'
       $ruby_package_provider = 'gem'
