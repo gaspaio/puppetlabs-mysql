@@ -19,8 +19,8 @@ class mysql::params {
   $ssl                 = false
 
   # Default log settings
-  $log_general = 0
-  $log_slow = 0
+  $general_log = 0
+  $slow_query_log = 0
   $long_query_time = 1
 
   case $::operatingsystem {
@@ -42,6 +42,7 @@ class mysql::params {
       $socket                = '/var/lib/mysql/mysql.sock'
       $config_file           = '/etc/my.cnf'
       $log_error             = '/var/log/mysqld.log'
+
       # This is broken. General and slow log file definitions missing
       $ruby_package_name     = 'ruby-mysql'
       $ruby_package_provider = 'gem'
@@ -62,8 +63,8 @@ class mysql::params {
       $socket               = '/var/run/mysqld/mysqld.sock'
       $config_file          = '/etc/mysql/my.cnf'
       $log_error            = '/var/log/mysql/error.log'
-      $log_general_file     = '/var/log/mysql/mysql.log'
-      $log_error            = '/var/log/mysql/error.log'
+      $general_log_file     = '/var/log/mysql/mysql.log'
+      $slow_query_log_file  = '/var/log/mysql/mysql-slow.log'
       $ruby_package_name    = 'libmysql-ruby'
       $python_package_name  = 'python-mysqldb'
       $php_package_name     = 'php5-mysql'
@@ -82,7 +83,8 @@ class mysql::params {
       $server_package_name   = 'databases/mysql55-server'
       $socket                = '/tmp/mysql.sock'
       $config_file           = '/var/db/mysql/my.cnf'
-            # This is broken. General and slow log file definitions missing
+
+# This is broken. General and slow log file definitions missing
       $log_error             = "/var/db/mysql/${::hostname}.err"
       $ruby_package_name     = 'ruby-mysql'
       $ruby_package_provider = 'gem'
