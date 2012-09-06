@@ -17,6 +17,11 @@ class mysql::params {
   $etc_root_password   = false
   $ssl                 = false
 
+  # Default log settings
+  $general_log = 0
+  $slow_query_log = 0
+  $long_query_time = 1
+
   case $::operatingsystem {
     'Ubuntu': {
       $service_provider = upstart
@@ -28,6 +33,7 @@ class mysql::params {
 
   case $::osfamily {
     'RedHat': {
+      # This is broken. General and slow log file definitions missing
       $basedir               = '/usr'
       $datadir               = '/var/lib/mysql'
       $service_name          = 'mysqld'
@@ -57,6 +63,8 @@ class mysql::params {
       $pidfile              = '/var/run/mysqld/mysqld.pid'
       $config_file          = '/etc/mysql/my.cnf'
       $log_error            = '/var/log/mysql/error.log'
+      $general_log_file     = '/var/log/mysql/mysql.log'
+      $slow_query_log_file  = '/var/log/mysql/mysql-slow.log'
       $ruby_package_name    = 'libmysql-ruby'
       $python_package_name  = 'python-mysqldb'
       $php_package_name     = 'php5-mysql'
@@ -68,6 +76,7 @@ class mysql::params {
     }
 
     'FreeBSD': {
+      # This is broken. General and slow log file definitions missing
       $basedir               = '/usr/local'
       $datadir               = '/var/db/mysql'
       $service_name          = 'mysql-server'
